@@ -1,0 +1,24 @@
+#!/bin/bash
+
+PID=$(ps -ef | grep eladmin-system-2.5.jar | grep -v grep | awk '{ print $2 }')
+if [ -z "$PID" ]
+then
+echo Application is already stopped
+else
+echo kill -9 $PID
+kill -9 $PID
+fi
+
+cd /opt/app/eladmin
+
+git pull
+
+mvn clean
+
+mvn compile
+
+mvn package
+
+cd /opt/app/eladmin/eladmin-system/target
+
+nohup java -jar eladmin-system-2.5.jar --spring.profiles.active=prod  > /opt/logs/eladmin/console.log 2>&1 &
