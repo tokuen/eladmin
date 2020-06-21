@@ -11,9 +11,9 @@ fi
 
 cd /opt/app/eladmin
 
-git pull
-
 mvn clean
+
+git pull
 
 mvn compile
 
